@@ -28,15 +28,12 @@ dependencies {
     runtime("com.fasterxml.jackson.core:jackson-databind:2.8.7")
     runtime("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.7")
 
-    // tag::jetty[]
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
+    compile("org.springframework.data:spring-data-mongodb")
+
     testCompile("junit:junit")
     testCompile("org.assertj:assertj-core")
     testCompile("org.springframework:spring-test")
