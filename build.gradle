@@ -38,4 +38,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
     testCompile("junit:junit")
+    testCompile("org.assertj:assertj-core")
+    testCompile("org.springframework:spring-test")
 }

@@ -29,7 +29,7 @@ public class UsersController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User getUserById(@PathVariable String id) {
-        return new User(UUID.randomUUID().toString(), "Milena", LocalDate.of(1989, 12, 28));
+        return new User(id, "Milena", LocalDate.of(1989, 12, 28));
     }
 
 }
