@@ -24,8 +24,9 @@ dependencies {
 
     compileOnly "org.projectlombok:lombok:1.16.8"
 
-    runtime("com.fasterxml.jackson.core:jackson-databind:2.5.0")
-    runtime("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    runtime("com.fasterxml.jackson.core:jackson-core:2.8.7")
+    runtime("com.fasterxml.jackson.core:jackson-databind:2.8.7")
+    runtime("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.7")
 
     // tag::jetty[]
     compile("org.springframework.boot:spring-boot-starter-web") {
