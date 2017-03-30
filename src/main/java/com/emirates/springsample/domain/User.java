@@ -1,5 +1,6 @@
 package com.emirates.springsample.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,10 @@ public class User {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+    }
+
+    @JsonIgnore
+    public boolean isPersistent() {
+        return id != null;
     }
 }

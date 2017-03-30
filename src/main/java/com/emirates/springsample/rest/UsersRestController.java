@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
 
 import java.util.List;
 
@@ -47,12 +49,47 @@ public class UsersRestController {
      * Stores a new {@link User} entity.
      *
      * @param user an {@link User} instance to store
-     * @return store result
+     * @return {@link HttpStatus#CREATED} and persisted user as body or {@link HttpStatus#BAD_REQUEST} when user already exists.
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> create(@RequestBody User user) {
-        User savedUser = usersRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        if (!user.isPersistent()) {
+            User savedUser = usersRepository.save(user);
+            UriComponents userUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("users/").path(savedUser.getId()).build();
+            return ResponseEntity.created(userUri.toUri()).build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
+
+    /**
+     * Updates an existing {@link User} entity.
+     *
+     * @param user an {@link User} instance to update
+     * @return {@link HttpStatus#NO_CONTENT} when successful or {@link HttpStatus#BAD_REQUEST} when given user does not exist.
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<User> update(@RequestBody User user) {
+        if (user.isPersistent()) {
+            usersRepository.save(user);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+    /**
+     * Delete user by ID.
+     *
+     * @param id identifier of an user to delete
+     * @return {@link HttpStatus#OK} when success
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable String id) {
+        usersRepository.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
