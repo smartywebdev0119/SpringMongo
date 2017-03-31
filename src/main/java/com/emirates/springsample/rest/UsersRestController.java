@@ -25,13 +25,15 @@ public class UsersRestController {
     private UsersRepository usersRepository;
 
     /**
-     * Queries all the {@link User} objects.
+     * Searches for {@link User} entities that matches the given criteria if provided.
      *
-     * @return all of the {@link User} entities as list
+     * @param name   name name to search for using like
+     * @param active active flag
+     * @return users matching the given criteria
      */
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> queryAll() {
-        return usersRepository.findAll();
+    public List<User> search(@RequestParam(required = false) String name, @RequestParam(required = false) Boolean active) {
+        return usersRepository.search(name, active);
     }
 
     /**
