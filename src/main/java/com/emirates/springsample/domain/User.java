@@ -22,6 +22,7 @@ public class User {
     private String id;
     private String name;
     private LocalDate birthDate;
+    private Country citizenship;
     private boolean active = true;
 
     public User(String id, String name, LocalDate birthDate) {
