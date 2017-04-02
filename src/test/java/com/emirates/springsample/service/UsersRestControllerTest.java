@@ -1,6 +1,6 @@
 package com.emirates.springsample.service;
 
-import com.emirates.springsample.SampleApplication;
+import com.emirates.springsample.SimpleUsersServiceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author alex
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SampleApplication.class)
+@ContextConfiguration(classes = SimpleUsersServiceApplication.class)
 public class UsersRestControllerTest {
 
     @Autowired

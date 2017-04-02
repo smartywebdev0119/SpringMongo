@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
+import javax.cache.annotation.CacheDefaults;
+import javax.cache.annotation.CacheKey;
+import javax.cache.annotation.CacheRemove;
+import javax.cache.annotation.CacheResult;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
+@CacheDefaults(cacheName = "users")
 public class UsersRestController {
 
     @Autowired
@@ -49,7 +54,8 @@ public class UsersRestController {
      * @return {@link User} object
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public User retrieve(@PathVariable String id) {
+    @CacheResult
+    public User retrieve(@PathVariable @CacheKey String id) {
         return usersRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -78,12 +84,15 @@ public class UsersRestController {
     /**
      * Updates an existing {@link User} entity.
      *
+     * @param id   identifier of an user to be modified
      * @param user an {@link User} instance to update
      * @return {@link HttpStatus#NO_CONTENT} when successful or {@link HttpStatus#BAD_REQUEST} when given user does not exist.
      */
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<User> update(@RequestBody @Valid User user) {
-        if (user.isPersistent()) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @CacheRemove
+    public ResponseEntity<User> update(@PathVariable @CacheKey String id, @RequestBody @Valid User user) {
+        if (usersRepository.exists(id)) {
+            user.setId(id); //in case body does not define it
             usersRepository.save(user);
 
             //publish event to notify listeners
@@ -102,7 +111,8 @@ public class UsersRestController {
      * @return {@link HttpStatus#OK} when success
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable String id) {
+    @CacheRemove
+    public ResponseEntity delete(@PathVariable @CacheKey String id) {
         usersRepository.delete(id);
         return ResponseEntity.ok().build();
     }

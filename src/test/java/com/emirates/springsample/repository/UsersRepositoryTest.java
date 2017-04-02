@@ -1,6 +1,6 @@
 package com.emirates.springsample.repository;
 
-import com.emirates.springsample.SampleApplication;
+import com.emirates.springsample.SimpleUsersServiceApplication;
 import com.emirates.springsample.domain.Country;
 import com.emirates.springsample.domain.User;
 import org.junit.After;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author alex
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SampleApplication.class)
+@ContextConfiguration(classes = SimpleUsersServiceApplication.class)
 public class UsersRepositoryTest {
 
     @Autowired

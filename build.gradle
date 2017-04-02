@@ -24,15 +24,17 @@ dependencies {
 
     compileOnly "org.projectlombok:lombok:1.16.8"
 
-    runtime("com.fasterxml.jackson.core:jackson-core:2.8.7")
-    runtime("com.fasterxml.jackson.core:jackson-databind:2.8.7")
-    runtime("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.7")
-
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile("org.springframework.data:spring-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-cache")
+    compile("javax.cache:cache-api")
+
+    runtime("com.fasterxml.jackson.core:jackson-core:2.8.7")
+    runtime("com.fasterxml.jackson.core:jackson-databind:2.8.7")
+    runtime("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.7")
 
     testCompile("junit:junit")
     testCompile("org.assertj:assertj-core")
