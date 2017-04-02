@@ -19,7 +19,7 @@ public class UserEventListener {
     private Logger logger;
 
     @EventListener
-    public void handleOrderCreatedEvent(UserChangedEvent userEvent) {
+    public void handleUserChangedEvent(UserChangedEvent userEvent) {
         logger.info("User with id {} was created or modified!", userEvent.getUserId());
     }
 
