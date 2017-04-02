@@ -1,8 +1,10 @@
 package com.emirates.springsample.rest;
 
+import com.emirates.springsample.events.UserChangedEvent;
 import com.emirates.springsample.repository.UsersRepository;
 import com.emirates.springsample.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,10 @@ public class UsersRestController {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
 
     /**
      * Searches for {@link User} entities that matches the given criteria if provided.
@@ -56,8 +62,12 @@ public class UsersRestController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> create(@RequestBody User user) {
         if (!user.isPersistent()) {
+            //save user to the database
             User savedUser = usersRepository.save(user);
             UriComponents userUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("users/").path(savedUser.getId()).build();
+
+            //publish event to notify listeners
+            eventPublisher.publishEvent(new UserChangedEvent(savedUser.getId()));
             return ResponseEntity.created(userUri.toUri()).build();
         } else {
             return ResponseEntity.badRequest().build();
@@ -75,6 +85,10 @@ public class UsersRestController {
     public ResponseEntity<User> update(@RequestBody User user) {
         if (user.isPersistent()) {
             usersRepository.save(user);
+
+            //publish event to notify listeners
+            eventPublisher.publishEvent(new UserChangedEvent(user.getId()));
+
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
