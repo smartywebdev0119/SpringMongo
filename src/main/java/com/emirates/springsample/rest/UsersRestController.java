@@ -1,6 +1,6 @@
 package com.emirates.springsample.rest;
 
-import com.emirates.springsample.dao.UsersRepository;
+import com.emirates.springsample.repository.UsersRepository;
 import com.emirates.springsample.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,6 +80,7 @@ public class UsersRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     /**
      * Delete user by ID.
      *
@@ -91,7 +92,6 @@ public class UsersRestController {
         usersRepository.delete(id);
         return ResponseEntity.ok().build();
     }
-
 
 
 }

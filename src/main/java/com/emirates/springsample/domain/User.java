@@ -25,9 +25,9 @@ public class User {
     private Country citizenship;
     private boolean active = true;
 
-    public User(String id, String name, LocalDate birthDate) {
-        this.id = id;
+    public User(String name, Country citizenship, LocalDate birthDate) {
         this.name = name;
+        this.citizenship = citizenship;
         this.birthDate = birthDate;
     }
 

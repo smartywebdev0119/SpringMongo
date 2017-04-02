@@ -1,4 +1,4 @@
-package com.emirates.springsample.dao;
+package com.emirates.springsample.repository;
 
 import com.emirates.springsample.domain.Country;
 import com.emirates.springsample.domain.User;
