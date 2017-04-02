@@ -1,4 +1,4 @@
-package com.emirates.springsample.rest;
+package com.emirates.springsample.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

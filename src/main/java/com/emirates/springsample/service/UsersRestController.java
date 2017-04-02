@@ -1,8 +1,8 @@
-package com.emirates.springsample.rest;
+package com.emirates.springsample.service;
 
+import com.emirates.springsample.domain.User;
 import com.emirates.springsample.events.UserChangedEvent;
 import com.emirates.springsample.repository.UsersRepository;
-import com.emirates.springsample.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,7 +29,6 @@ public class UsersRestController {
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
-
 
     /**
      * Searches for {@link User} entities that matches the given criteria if provided.
@@ -60,7 +60,7 @@ public class UsersRestController {
      * @return {@link HttpStatus#CREATED} and persisted user as body or {@link HttpStatus#BAD_REQUEST} when user already exists.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@RequestBody @Valid User user) {
         if (!user.isPersistent()) {
             //save user to the database
             User savedUser = usersRepository.save(user);
@@ -82,7 +82,7 @@ public class UsersRestController {
      * @return {@link HttpStatus#NO_CONTENT} when successful or {@link HttpStatus#BAD_REQUEST} when given user does not exist.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<User> update(@RequestBody User user) {
+    public ResponseEntity<User> update(@RequestBody @Valid User user) {
         if (user.isPersistent()) {
             usersRepository.save(user);
 

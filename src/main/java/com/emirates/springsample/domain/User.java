@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -20,8 +21,11 @@ public class User {
 
     @Id
     private String id;
+    @NotNull
     private String name;
+    @NotNull
     private LocalDate birthDate;
+    @NotNull
     private Country citizenship;
     private boolean active = true;
 

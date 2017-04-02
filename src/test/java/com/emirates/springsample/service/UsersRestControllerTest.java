@@ -1,4 +1,4 @@
-package com.emirates.springsample.rest;
+package com.emirates.springsample.service;
 
 import com.emirates.springsample.SampleApplication;
 import org.junit.Test;
