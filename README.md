@@ -1,10 +1,12 @@
-# An example of Spring Boot + REST + Mongo [DRAFT]
+# Sample Users service - an example of Spring Boot + REST + Mongo Application
 
 This is just an example of a standalone REST microservice that uses some sample capabilities of 
 
 - Spring Boot
 - Spring Data
 - Spring WEB MVC
+- Bean Validation (JSR-303) integration
+- JCache (JSR-107) integration
 
 ## Getting Started
 
