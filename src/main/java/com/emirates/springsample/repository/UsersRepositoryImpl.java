@@ -42,8 +42,9 @@ public class UsersRepositoryImpl implements UsersRepositoryCustom {
         if (birthDateFrom != null) {
             searchQuery.addCriteria(where("birthDate").gte(birthDateFrom));
         }
-        if (birthDateFrom != null) {
-            searchQuery.addCriteria(where("birthDateTo").lte(birthDateTo));
+        if (birthDateTo != null) {
+            //TODO this currently causes exception
+            searchQuery.addCriteria(where("birthDate").lte(birthDateFrom));
         }
         if (active != null) {
             searchQuery.addCriteria(where("active").is(active));

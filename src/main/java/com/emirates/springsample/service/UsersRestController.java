@@ -6,6 +6,7 @@ import com.emirates.springsample.events.UserChangedEvent;
 import com.emirates.springsample.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,10 @@ public class UsersRestController {
      * @return users matching the given criteria
      */
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> search(@RequestParam(required = false) String name, @RequestParam(required = false) Country citizenship, @RequestParam(required = false) LocalDate birthDateFrom, @RequestParam(required = false) LocalDate birthDateTo, @RequestParam(required = false) Boolean active) {
-        //TODO fix date marshalling using timestamps so that search works
+    public List<User> search(@RequestParam(required = false) String name, @RequestParam(required = false) Country citizenship,
+                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthDateFrom,
+                             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthDateTo,
+                             @RequestParam(required = false) Boolean active) {
         return usersRepository.search(name, citizenship, birthDateFrom, birthDateTo, active);
     }
 
