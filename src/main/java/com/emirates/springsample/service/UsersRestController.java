@@ -1,5 +1,6 @@
 package com.emirates.springsample.service;
 
+import com.emirates.springsample.domain.Country;
 import com.emirates.springsample.domain.User;
 import com.emirates.springsample.events.UserChangedEvent;
 import com.emirates.springsample.repository.UsersRepository;
@@ -16,6 +17,7 @@ import javax.cache.annotation.CacheKey;
 import javax.cache.annotation.CacheRemove;
 import javax.cache.annotation.CacheResult;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -38,13 +40,17 @@ public class UsersRestController {
     /**
      * Searches for {@link User} entities that matches the given criteria if provided.
      *
-     * @param name   name name to search for using like
-     * @param active active flag
+     * @param name          name name to search for using like
+     * @param citizenship   user citizenship
+     * @param birthDateFrom the date less or equal searched user birth date
+     * @param birthDateTo   the date greater or equal searched user birth date
+     * @param active        active flag
      * @return users matching the given criteria
      */
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> search(@RequestParam(required = false) String name, @RequestParam(required = false) Boolean active) {
-        return usersRepository.search(name, active);
+    public List<User> search(@RequestParam(required = false) String name, @RequestParam(required = false) Country citizenship, @RequestParam(required = false) LocalDate birthDateFrom, @RequestParam(required = false) LocalDate birthDateTo, @RequestParam(required = false) Boolean active) {
+        //TODO fix date marshalling using timestamps so that search works
+        return usersRepository.search(name, citizenship, birthDateFrom, birthDateTo, active);
     }
 
     /**

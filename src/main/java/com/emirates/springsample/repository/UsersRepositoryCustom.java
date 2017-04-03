@@ -3,6 +3,7 @@ package com.emirates.springsample.repository;
 import com.emirates.springsample.domain.Country;
 import com.emirates.springsample.domain.User;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +18,14 @@ public interface UsersRepositoryCustom {
     /**
      * Searches for {@link User} entities that matches the given criteria if provided.
      *
-     * @param name   name name to search for using like
-     * @param active   active flag
+     * @param name          name name to search for using like
+     * @param citizenship   user citizenship
+     * @param birthDateFrom the date less or equal searched user birth date
+     * @param birthDateTo   the date greater or equal searched user birth date
+     * @param active        active flag
      * @return users matching criteria
      */
-    List<User> search(String name, Boolean active);
+    List<User> search(String name, Country citizenship, LocalDate birthDateFrom, LocalDate birthDateTo, Boolean active);
 
 
     /**

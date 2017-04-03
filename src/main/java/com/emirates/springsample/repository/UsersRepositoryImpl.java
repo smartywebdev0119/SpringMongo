@@ -1,27 +1,27 @@
 package com.emirates.springsample.repository;
 
-import com.emirates.springsample.repository.aggregation.UsersByCitizenshipResult;
 import com.emirates.springsample.domain.Country;
 import com.emirates.springsample.domain.User;
+import com.emirates.springsample.repository.aggregation.UsersByCitizenshipResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 /**
  * An implementation of custom, more advanced repository capabilities of the {@link UsersRepository}.
  *
- * @see UsersRepository
- *
  * @author alex
+ * @see UsersRepository
  */
 public class UsersRepositoryImpl implements UsersRepositoryCustom {
 
@@ -29,12 +29,21 @@ public class UsersRepositoryImpl implements UsersRepositoryCustom {
     private MongoOperations mongoOperations;
 
     @Override
-    public List<User> search(String name, Boolean active) {
+    public List<User> search(String name, Country citizenship, LocalDate birthDateFrom, LocalDate birthDateTo, Boolean active) {
 
         Query searchQuery = new Query();
 
         if (name != null) {
             searchQuery.addCriteria(where("name").regex(".*" + name + ".*"));
+        }
+        if (citizenship != null) {
+            searchQuery.addCriteria(where("citizenship").is(citizenship));
+        }
+        if (birthDateFrom != null) {
+            searchQuery.addCriteria(where("birthDate").gte(birthDateFrom));
+        }
+        if (birthDateFrom != null) {
+            searchQuery.addCriteria(where("birthDateTo").lte(birthDateTo));
         }
         if (active != null) {
             searchQuery.addCriteria(where("active").is(active));
